@@ -1,0 +1,4 @@
+m = mass (not the mz)
+a = area
+y = peak height
+rt = retention time
