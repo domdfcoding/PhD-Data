@@ -1,2 +1,2 @@
-# PhD-Data
+# PhD Data
 Data generated during my PhD research 
