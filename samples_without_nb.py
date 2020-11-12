@@ -1,3 +1,4 @@
+# 3rd party
 from charts_shared import all_samples
 
 for sample in all_samples:

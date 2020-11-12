@@ -1,51 +1,58 @@
-#  !/usr/bin/env python
-#   -*- coding: utf-8 -*-
+#!/usr/bin/env python3
 #
-#  propellant_method_permutations_charts.py
+#  _02_propellant_method_permutations_charts.py
 #
 #  Copyright © 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
-#  This program is free software; you can redistribute it and/or modify
-#  it under the terms of the GNU Lesser General Public License as published by
-#  the Free Software Foundation; either version 3 of the License, or
-#  (at your option) any later version.
+#  Permission is hereby granted, free of charge, to any person obtaining a copy
+#  of this software and associated documentation files (the "Software"), to deal
+#  in the Software without restriction, including without limitation the rights
+#  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+#  copies of the Software, and to permit persons to whom the Software is
+#  furnished to do so, subject to the following conditions:
 #
-#  This program is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU Lesser General Public License for more details.
+#  The above copyright notice and this permission notice shall be included in all
+#  copies or substantial portions of the Software.
 #
-#  You should have received a copy of the GNU Lesser General Public License
-#  along with this program; if not, write to the Free Software
-#  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-#  MA 02110-1301, USA.
+#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+#  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+#  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+#  IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+#  DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+#  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+#  OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
+
+# 3rd party
+from charts_shared import all_samples, chdir, mass_calibration_ranges
+from mathematical.data_frames import set_display_options
+
 # this package
-from lcms_processor.charts import (
-	A4_portrait,
-	ChartItem,
-	create_figure, plot_areas,
-	plot_retention_times, sort_n_filter_by_filename,
-	tex_page, tex_page_landscape, update_all_labels_with_cal_range,
-	)
-from lcms_processor.tkagg_pyplot import plt, savefig
-from lcms_processor.utils import _1ug_l, set_display_options, warn_if_all_filtered
+from lcms_results_processor.chart_tools import create_figure, plt, savefig
+from lcms_results_processor.charts import (
+		ChartItem,
+		plot_areas,
+		plot_retention_times,
+		sort_n_filter_by_filename,
+		tex_page,
+		update_all_labels_with_cal_range
+		)
+from lcms_results_processor.utils import _1ug_l, warn_if_all_filtered
 
 # Filter samples, reorder and rename
 ug_chart_items = [
 		ChartItem.from_conditions(
 				filename="Propellant_1ug_+ve_5ul_191121-0009-r001.d",
-				new_name="",
+				new_name='',
 				concentration=_1ug_l,
 				sort_order=10,
 				esi=None,
 				vol=None,
 				),
-
 		ChartItem.from_conditions(
 				filename="Propellant_1ug_gas_200_191121-0012-r001.d",
-				new_name="",
+				new_name='',
 				concentration=_1ug_l,
 				sort_order=20,
 				esi=None,
@@ -54,7 +61,7 @@ ug_chart_items = [
 				),
 		ChartItem.from_conditions(
 				filename="Propellant_1ug_gas_280_191121-0014-r001.d",
-				new_name="",
+				new_name='',
 				concentration=_1ug_l,
 				sort_order=30,
 				esi=None,
@@ -63,7 +70,7 @@ ug_chart_items = [
 				),
 		ChartItem.from_conditions(
 				filename="Propellant_1ug_drying_14_191121-0016-r001.d",
-				new_name="",
+				new_name='',
 				concentration=_1ug_l,
 				sort_order=40,
 				esi=None,
@@ -72,7 +79,7 @@ ug_chart_items = [
 				),
 		ChartItem.from_conditions(
 				filename="Propellant_1ug_drying_16_191121-0018-r001.d",
-				new_name="",
+				new_name='',
 				concentration=_1ug_l,
 				sort_order=50,
 				esi=None,
@@ -81,7 +88,7 @@ ug_chart_items = [
 				),
 		ChartItem.from_conditions(
 				filename="Propellant_1ug_drying_18_191121-0020-r001.d",
-				new_name="",
+				new_name='',
 				concentration=_1ug_l,
 				sort_order=60,
 				esi=None,
@@ -90,7 +97,7 @@ ug_chart_items = [
 				),
 		ChartItem.from_conditions(
 				filename="Propellant_1ug_nebul_40_191121-0022-r001.d",
-				new_name="",
+				new_name='',
 				concentration=_1ug_l,
 				sort_order=70,
 				esi=None,
@@ -99,7 +106,7 @@ ug_chart_items = [
 				),
 		ChartItem.from_conditions(
 				filename="Propellant_1ug_nebul_50_191121-0024-r001.d",
-				new_name="",
+				new_name='',
 				concentration=_1ug_l,
 				sort_order=80,
 				esi=None,
@@ -121,16 +128,15 @@ ug_chart_items = [
 mg_chart_items = [
 		ChartItem.from_conditions(
 				filename="Propellant_1mg_+ve_5ul_191121-0008-r001.d",
-				new_name="",
+				new_name='',
 				concentration=_1ug_l,
 				sort_order=10,
 				esi=None,
 				vol=None,
 				),
-
 		ChartItem.from_conditions(
 				filename="Propellant_1mg_gas_200_191121-0011-r001.d",
-				new_name="",
+				new_name='',
 				concentration=_1ug_l,
 				sort_order=20,
 				esi=None,
@@ -139,7 +145,7 @@ mg_chart_items = [
 				),
 		ChartItem.from_conditions(
 				filename="Propellant_1mg_gas_280_191121-0013-r001.d",
-				new_name="",
+				new_name='',
 				concentration=_1ug_l,
 				sort_order=30,
 				esi=None,
@@ -148,7 +154,7 @@ mg_chart_items = [
 				),
 		ChartItem.from_conditions(
 				filename="Propellant_1mg_drying_14_191121-0015-r001.d",
-				new_name="",
+				new_name='',
 				concentration=_1ug_l,
 				sort_order=40,
 				esi=None,
@@ -157,7 +163,7 @@ mg_chart_items = [
 				),
 		ChartItem.from_conditions(
 				filename="Propellant_1mg_drying_16_191121-0017-r001.d",
-				new_name="",
+				new_name='',
 				concentration=_1ug_l,
 				sort_order=50,
 				esi=None,
@@ -166,7 +172,7 @@ mg_chart_items = [
 				),
 		ChartItem.from_conditions(
 				filename="Propellant_1mg_drying_18_191121-0019-r001.d",
-				new_name="",
+				new_name='',
 				concentration=_1ug_l,
 				sort_order=60,
 				esi=None,
@@ -175,7 +181,7 @@ mg_chart_items = [
 				),
 		ChartItem.from_conditions(
 				filename="Propellant_1mg_nebul_40_191121-0021-r001.d",
-				new_name="",
+				new_name='',
 				concentration=_1ug_l,
 				sort_order=70,
 				esi=None,
@@ -184,7 +190,7 @@ mg_chart_items = [
 				),
 		ChartItem.from_conditions(
 				filename="Propellant_1mg_nebul_50_191121-0023-r001.d",
-				new_name="",
+				new_name='',
 				concentration=_1ug_l,
 				sort_order=80,
 				esi=None,
@@ -195,7 +201,7 @@ mg_chart_items = [
 		# TODO: have datafile but no results
 		ChartItem.from_conditions(
 				filename="Propellant_1mg_nebul_60_191121-0025-r001.d",
-				new_name="",
+				new_name='',
 				concentration=_1ug_l,
 				sort_order=90,
 				esi=None,
@@ -206,7 +212,6 @@ mg_chart_items = [
 
 
 def make_charts():
-	from charts_shared import all_samples, mass_calibration_ranges, chdir
 	chdir()
 
 	# Display options for numpy and pandas
@@ -268,5 +273,5 @@ def make_charts():
 	plt.show()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 	make_charts()

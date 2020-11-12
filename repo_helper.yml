@@ -23,3 +23,4 @@ python_versions:
 exclude_files:
  - issue_templates
  - actions
+ - contributing

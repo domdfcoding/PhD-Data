@@ -1,31 +1,33 @@
-#  !/usr/bin/env python
-#   -*- coding: utf-8 -*-
+#!/usr/bin/env python3
 #
 #  generate_pcdl_csv.py
 #
 #  Copyright © 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
-#  This program is free software; you can redistribute it and/or modify
-#  it under the terms of the GNU Lesser General Public License as published by
-#  the Free Software Foundation; either version 3 of the License, or
-#  (at your option) any later version.
+#  Permission is hereby granted, free of charge, to any person obtaining a copy
+#  of this software and associated documentation files (the "Software"), to deal
+#  in the Software without restriction, including without limitation the rights
+#  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+#  copies of the Software, and to permit persons to whom the Software is
+#  furnished to do so, subject to the following conditions:
 #
-#  This program is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU Lesser General Public License for more details.
+#  The above copyright notice and this permission notice shall be included in all
+#  copies or substantial portions of the Software.
 #
-#  You should have received a copy of the GNU Lesser General Public License
-#  along with this program; if not, write to the Free Software
-#  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-#  MA 02110-1301, USA.
+#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+#  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+#  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+#  IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+#  DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+#  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+#  OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
+# 3rd party
 from mathematical.data_frames import set_display_options
 from mh_utils.pcdl import make_pcdl_csv
 
 set_display_options()
-
 
 target_compounds = [
 		# ("Compound", "CAS"),
@@ -75,28 +77,28 @@ target_compounds = [
 		("Diphenylamine", "122-39-4"),
 		("2-Nitrodiphenylamine", "119-75-5"),
 		("2,2'-dinitrodiphenylamine", "18264-71-6"),
-		("2,2',4,4'-tetranitrodiphenylamine", " "),
+		("2,2',4,4'-tetranitrodiphenylamine", ' '),
 		("2,2',4,4',6,6'-hexanitrodiphenylamine", "131-73-7"),
-		("2,2',4,4'6-pentanitrodiphenylamine", " "),
+		("2,2',4,4'6-pentanitrodiphenylamine", ' '),
 		("2,4-dinitrodiphenylamine", "961-68-2"),
-		("2,4,4'-trinitrodiphenylamine", " "),
-		("2,4,6-trinitrodiphenylamine", " "),
+		("2,4,4'-trinitrodiphenylamine", ' '),
+		("2,4,6-trinitrodiphenylamine", ' '),
 		("2,4'-dinitrodiphenylamine", "612-36-2"),
 		("4-Nitrodiphenylamine", "836-30-6"),
-		("4,4-dinitrodiphenylamine", " "),
+		("4,4-dinitrodiphenylamine", ' '),
 		("4,4'-dinitrodiphenylamine", "1821-27-8"),
-		("4-nitroso-2-nitrodiphenylamine", " "),
+		("4-nitroso-2-nitrodiphenylamine", ' '),
 		("N-nitroso-2-nitrodiphenylamine", "21565-15-1"),
-		("N-nitroso-2,2’-dinitrodiphenylamine", " "),
-		("N-nitroso-2,2’,4-trinitrodiphenylamine", " "),
-		("N-nitroso-2,4-dinitrodiphenylamine", " "),
-		("N-nitroso-2,4'-dinitrodiphenylamine", " "),
+		("N-nitroso-2,2’-dinitrodiphenylamine", ' '),
+		("N-nitroso-2,2’,4-trinitrodiphenylamine", ' '),
+		("N-nitroso-2,4-dinitrodiphenylamine", ' '),
+		("N-nitroso-2,4'-dinitrodiphenylamine", ' '),
 		("N-nitroso-4-nitrodiphenylamine", "3665-70-1"),
-		("N-nitroso-4,4-dinitrodiphenylamine", " "),
-		("N-nitroso-4,4'-dinitrodiphenylamine", " "),
-		("2-nitrosodiphenylamine", " "),
+		("N-nitroso-4,4-dinitrodiphenylamine", ' '),
+		("N-nitroso-4,4'-dinitrodiphenylamine", ' '),
+		("2-nitrosodiphenylamine", ' '),
 		("4-nitrosodiphenylamine", "156-10-5"),
-		("N-4-dinitrosodiphenylamine", " "),
+		("N-4-dinitrosodiphenylamine", ' '),
 		("N-nitrosodiphenylamine", "86-30-6"),
 		("Ethylbenzene", "100-41-4"),
 		("2-Ethylbenzoic acid", "612-19-1"),
@@ -127,7 +129,7 @@ target_compounds = [
 		("Benzoxazole", "273-50-0"),
 		("2-nitrophenol", "88-75-5"),
 		("Diazodinitrophenol", "4682-03-5"),
-		("Diazonitrophenol", " "),
+		("Diazonitrophenol", ' '),
 		("Phenol", "108-95-2"),
 		("Acetophenone", "98-86-2"),
 		("Benzophenone", "119-61-9"),
@@ -172,8 +174,8 @@ target_compounds = [
 		("3-nitrocarbazole", "3077-85-8"),
 		("9-phenyl-9H-carbazole", "1150-62-5"),
 		("Carbazole", "86-74-8"),
-		("Dextrin", " "),
-		("Starch", " "),
+		("Dextrin", ' '),
+		("Starch", ' '),
 		("1-Naphthalenecarbonitrile", "86-53-3"),
 		("2-Naphthalenecarbonitrile", "613-46-7"),
 		("2-Pyridinecarbonitrile", "100-70-9"),
@@ -181,7 +183,7 @@ target_compounds = [
 		("4-Pyridinecarbonitrile", "100-48-1"),
 		("Methyl cellulose", "9004-67-5"),
 		("Nitrocellulose", "9004-70-0"),
-		("Cyanides", " "),
+		("Cyanides", ' '),
 		("Acenaphthene", "83-32-9"),
 		("Benzo[b]thiophene", "95-15-8"),
 		("2-Furaldehyde", "98-01-1"),
@@ -199,12 +201,12 @@ target_compounds = [
 		("Benzo[a]pyrene", "50-32-8"),
 		("Pyrene", "129-00-0"),
 		("2-ethylquinoline", "1613-34-9"),
-		("2,2’-biquinoline", "119-91-5",),
+		("2,2’-biquinoline", "119-91-5"),
 		("Isoquinoline", "119-65-3"),
 		("Quinoline", "91-22-5"),
-		("Gum Arabic", " "),
-		("Gum tragacanth", " "),
-		("Karaya gum", " "),
+		("Gum Arabic", ' '),
+		("Gum tragacanth", ' '),
+		("Karaya gum", ' '),
 		("2,3-Dimetyl-2,3-dinitrobutane", "3964-18-9"),
 		("2,4-Dinitroanisole", "119-27-7"),
 		("3,5-Dinitroaniline", "618-87-1"),
@@ -213,7 +215,7 @@ target_compounds = [
 		("N-methyl-p-nitroaniline", "100-15-2"),
 		("Nitroguanidine", "556-88-7"),
 		("Octogen (Octahydro-1,3,5,7-tetranitro-1,3,5,7-tetrazocine)", "2691-41-0"),
-		("potassium 4,6-dinitrobenzofuroxan", " "),
+		("potassium 4,6-dinitrobenzofuroxan", ' '),
 		("Oxamide", "471-46-5"),
 		("2-nitro-N-(4-nitrophenyl)benzamine", "78411-60-6"),
 		("2,4,6-Trinitrophenylmethylni-tramine", "479-45-8"),
@@ -236,8 +238,8 @@ target_compounds = [
 		("Sodium alginate", "9005-38-3"),
 		("Candelilla Wax", "8006-44-8"),
 		("Paraffin Oil", "8012-95-1"),
-		("Petrolatum", " "),
-		("Acaroid resin", " "),
+		("Petrolatum", ' '),
+		("Acaroid resin", ' '),
 		("Urethane", "51-79-6"),
 		("1-(5-tetrazolyl)-4-guanyltetrazene hydrate", "31330-63-9"),
 		("Acrolein", "107-02-8"),
@@ -250,6 +252,5 @@ target_compounds = [
 		("Phytane", "638-36-8"),
 		("Styrene", "100-42-5"),
 		]
-
 
 print(make_pcdl_csv(target_compounds, "all_compounds_pcdl.csv"))

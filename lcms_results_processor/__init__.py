@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 #
-#  charts_shared.py
+#  __init__.py
+"""
+
+"""
 #
 #  Copyright © 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
@@ -23,33 +26,8 @@
 #  OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-# stdlib
-import json
-import os
-import pathlib
-
-# 3rd party
-from mh_utils.csv_parser import SampleList
-
-oldwd = os.getcwd()
-
-
-def chdir():
-	root = pathlib.Path(__file__).parent.parent.parent.absolute()
-	os.chdir(root)
-
-
-chdir()
-
-all_samples = SampleList.from_json_file("data/All Results.json")
-all_samples.sort_samples("sample_name")
-
-with open("data/mass_calibration_ranges.json") as fp:
-	mass_calibration_ranges = json.load(fp)
-
-__all__ = [
-		"all_samples",
-		"mass_calibration_ranges",
-		]
-
-os.chdir(oldwd)
+__author__: str = "Dominic Davis-Foster"
+__copyright__: str = "2020 Dominic Davis-Foster"
+__license__: str = "MIT License"
+__version__: str = "0.0.0"
+__email__: str = "dominic@davis-foster.co.uk"

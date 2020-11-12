@@ -1,50 +1,60 @@
-#  !/usr/bin/env python
-#   -*- coding: utf-8 -*-
+#!/usr/bin/env python3
 #
-#  benito_prop_method_permutations_charts.py.py
+#  _03_benito_prop_method_permutations_charts.py
 #
 #  Copyright © 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
-#  This program is free software; you can redistribute it and/or modify
-#  it under the terms of the GNU Lesser General Public License as published by
-#  the Free Software Foundation; either version 3 of the License, or
-#  (at your option) any later version.
+#  Permission is hereby granted, free of charge, to any person obtaining a copy
+#  of this software and associated documentation files (the "Software"), to deal
+#  in the Software without restriction, including without limitation the rights
+#  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+#  copies of the Software, and to permit persons to whom the Software is
+#  furnished to do so, subject to the following conditions:
 #
-#  This program is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU Lesser General Public License for more details.
+#  The above copyright notice and this permission notice shall be included in all
+#  copies or substantial portions of the Software.
 #
-#  You should have received a copy of the GNU Lesser General Public License
-#  along with this program; if not, write to the Free Software
-#  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-#  MA 02110-1301, USA.
+#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+#  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+#  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+#  IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+#  DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+#  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+#  OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-# this package
-from pprint import pprint
+
+# stdlib
 from typing import List
 
+# 3rd party
 import numpy
-import pandas
+from charts_shared import all_samples, chdir, mass_calibration_ranges
+from mathematical.data_frames import set_display_options
 
-from lcms_processor.charts import (
-	A4_portrait,
-	ChartItem,
-	create_figure, make_rt_dataframe, plot_areas,
-	plot_retention_times, sort_n_filter_by_filename,
-	tex_page, tex_page_landscape, update_all_labels_with_cal_range,
-	)
-from lcms_processor.tkagg_pyplot import plt, savefig  # isort: skip
-from lcms_processor.utils import _1mg_l, _1ug_l, _10mg_l, set_display_options, sup_1, sup_2, warn_if_all_filtered
+# this package
+from lcms_results_processor.charts import (
+		ChartItem,
+		make_rt_dataframe,
+		plot_areas,
+		plot_retention_times,
+		sort_n_filter_by_filename,
+		tex_page,
+		tex_page_landscape,
+		update_all_labels_with_cal_range
+		)
+from lcms_results_processor.utils import _1mg_l, _1ug_l, _10mg_l, sup_1, sup_2, warn_if_all_filtered
+
+from lcms_results_processor.chart_tools import create_figure, savefig  # isort: skip
 
 chart_items = [
 		ChartItem.from_conditions(
 				filename="Propellant_1ug_191126-0003-r001.d",  # solution 1
 				sort_order=10,
 				concentration=_1ug_l,
-				esi=None, vol=None,
-				new_name='(a)'
+				esi=None,
+				vol=None,
+				new_name="(a)"
 				),
 
 		# just nitrobenzene
@@ -52,22 +62,25 @@ chart_items = [
 				filename="Propellant 1ug (2)_191206-0002.d",  # solution 2
 				sort_order=20,
 				concentration=_1ug_l,
-				esi=None, vol=None,
-				new_name='(b)',
+				esi=None,
+				vol=None,
+				new_name="(b)",
 				),
 		ChartItem.from_conditions(
 				filename="Propellant_1mg_191126-0002-r001.d",  # solution 1
 				sort_order=30,
 				concentration=_1mg_l,
-				esi=None, vol=None,
-				new_name='(a)',
+				esi=None,
+				vol=None,
+				new_name="(a)",
 				),
 		ChartItem.from_conditions(
 				filename="Propellant 1mg (2)_191206-0003.d",  # solution 2
 				sort_order=40,
 				concentration=_1mg_l,
-				esi=None, vol=None,
-				new_name='(b)',
+				esi=None,
+				vol=None,
+				new_name="(b)",
 				),
 
 		# just nitrobenzene
@@ -76,16 +89,18 @@ chart_items = [
 				dgt=200,
 				sort_order=50,
 				concentration=_1mg_l,
-				esi=None, vol=None,
-				new_name='(b)',
+				esi=None,
+				vol=None,
+				new_name="(b)",
 				),
 		ChartItem.from_conditions(
 				filename="Propellant 1mg (2)_191206-0007.d",  # solution 2
 				dgf=14,
 				sort_order=60,
 				concentration=_1mg_l,
-				esi=None, vol=None,
-				new_name='(b)',
+				esi=None,
+				vol=None,
+				new_name="(b)",
 				),
 
 		# just nitrobenzene
@@ -94,53 +109,60 @@ chart_items = [
 				neb=50,
 				sort_order=70,
 				concentration=_1mg_l,
-				esi=None, vol=None,
-				new_name='(b)',
+				esi=None,
+				vol=None,
+				new_name="(b)",
 				),
 
 		# just nitrobenzene
 		ChartItem.from_conditions(
 				filename="Propellant 1mg (2)_191206-0009.d",  # solution 2
 				sort_order=80,
-				dgf=14, neb=35,
+				dgf=14,
+				neb=35,
 				concentration=_1mg_l,
-				esi=None, vol=None,
-				new_name='(b)',
+				esi=None,
+				vol=None,
+				new_name="(b)",
 				),
 		ChartItem.from_conditions(
 				filename="Propellant_10mg_191128-0004-r001.d",  # solution 1
 				sort_order=90,
 				concentration=_10mg_l,
-				esi=None, vol=None,
+				esi=None,
+				vol=None,
 				new_name=f'(a){sup_1}',
 				),
 		ChartItem.from_conditions(
 				filename="Propellant 10mg (1)_191206-00011.d",  # solution 1
 				sort_order=100,
 				concentration=_10mg_l,
-				esi=None, vol=None,
+				esi=None,
+				vol=None,
 				new_name=f'(a){sup_2}',
 				),
 		ChartItem.from_conditions(
 				filename="Propellant 10mg (2)_191206-0004.d",  # solution 2
 				sort_order=110,
 				concentration=_10mg_l,
-				esi=None, vol=None,
-				new_name='(b)',
+				esi=None,
+				vol=None,
+				new_name="(b)",
 				),
 		ChartItem.from_conditions(
 				filename="Propellant 10mg (2)_191206-00010.d",  # solution 2
 				sort_order=120,
-				dgf=14, neb=35,
+				dgf=14,
+				neb=35,
 				concentration=_10mg_l,
-				esi=None, vol=None,
-				new_name='(b)',
+				esi=None,
+				vol=None,
+				new_name="(b)",
 				),
 		]
 
 
 def make_charts():
-	from charts_shared import all_samples, mass_calibration_ranges, chdir
 	chdir()
 
 	# Display options for numpy and pandas
@@ -187,5 +209,5 @@ def make_charts():
 	# plt.show()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 	make_charts()

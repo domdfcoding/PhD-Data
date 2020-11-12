@@ -1,24 +1,26 @@
-#  !/usr/bin/env python
-#   -*- coding: utf-8 -*-
+#!/usr/bin/env python3
 #
 #  charts.py
 #
 #  Copyright © 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
-#  This program is free software; you can redistribute it and/or modify
-#  it under the terms of the GNU Lesser General Public License as published by
-#  the Free Software Foundation; either version 3 of the License, or
-#  (at your option) any later version.
+#  Permission is hereby granted, free of charge, to any person obtaining a copy
+#  of this software and associated documentation files (the "Software"), to deal
+#  in the Software without restriction, including without limitation the rights
+#  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+#  copies of the Software, and to permit persons to whom the Software is
+#  furnished to do so, subject to the following conditions:
 #
-#  This program is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU Lesser General Public License for more details.
+#  The above copyright notice and this permission notice shall be included in all
+#  copies or substantial portions of the Software.
 #
-#  You should have received a copy of the GNU Lesser General Public License
-#  along with this program; if not, write to the Free Software
-#  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-#  MA 02110-1301, USA.
+#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+#  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+#  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+#  IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+#  DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+#  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+#  OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
 # stdlib
@@ -40,8 +42,21 @@ from matplotlib.patches import Rectangle
 from mh_utils.csv_parser import SampleList
 
 # this package
-from lcms_processor.chart_tools import plt
-from lcms_processor.utils import format_si_units, make_conditions_label
+from lcms_results_processor.chart_tools import plt
+from lcms_results_processor.utils import format_si_units, make_conditions_label
+
+__all__ = [
+		"plot_area_and_score",
+		"plot_areas",
+		"plot_retention_times",
+		"make_rt_dataframe",
+		"ChartItem",
+		"sort_n_filter_by_filename",
+		"update_label_with_cal_range",
+		"cast_cal_range",
+		"legend",
+		"update_all_labels_with_cal_range"
+		]
 
 # Display options for numpy and pandas
 set_display_options()
@@ -308,7 +323,7 @@ class ChartItem:
 			current_name: Optional[str] = None,
 			*,
 			concentration,
-			esi: int = 1,
+			esi: Optional[int] = 1,
 			dgt=None,
 			dgf=None,
 			neb=None,
@@ -463,4 +478,3 @@ def update_all_labels_with_cal_range(
 
 	for item in item_list:
 		update_label_with_cal_range(item, mass_calibration_ranges)
-

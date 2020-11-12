@@ -1,130 +1,162 @@
-#  !/usr/bin/env python
-#   -*- coding: utf-8 -*-
+#!/usr/bin/env python3
 #
-#  mixed_standard_charts.py.py
+#  _04_mixed_standard_charts.py
 #
 #  Copyright © 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
-#  This program is free software; you can redistribute it and/or modify
-#  it under the terms of the GNU Lesser General Public License as published by
-#  the Free Software Foundation; either version 3 of the License, or
-#  (at your option) any later version.
+#  Permission is hereby granted, free of charge, to any person obtaining a copy
+#  of this software and associated documentation files (the "Software"), to deal
+#  in the Software without restriction, including without limitation the rights
+#  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+#  copies of the Software, and to permit persons to whom the Software is
+#  furnished to do so, subject to the following conditions:
 #
-#  This program is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU Lesser General Public License for more details.
+#  The above copyright notice and this permission notice shall be included in all
+#  copies or substantial portions of the Software.
 #
-#  You should have received a copy of the GNU Lesser General Public License
-#  along with this program; if not, write to the Free Software
-#  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-#  MA 02110-1301, USA.
+#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+#  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+#  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+#  IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+#  DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+#  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+#  OR OTHER DEALINGS IN THE SOFTWARE.
 #
+
+# 3rd party
+from charts_shared import all_samples, chdir
+from mathematical.data_frames import set_display_options
 
 # this package
-from lcms_processor.charts import (
-	A4_portrait,
-	A5_landscape,
-	ChartItem,
-	create_figure, plot_areas,
-	plot_retention_times, sort_n_filter_by_filename,
-	tex_page, tex_page_landscape, update_all_labels_with_cal_range,
-	)
-from lcms_processor.tkagg_pyplot import plt, savefig
-from lcms_processor.utils import (
-	_0_1ug_l,
-	_1mg_l,
-	_1ug_l,
-	_1ul,
-	_10ug_l,
-	_100ug_l,
-	set_display_options,
-	sup_3, warn_if_all_filtered,
-	)
-
+from lcms_results_processor.chart_tools import create_figure, savefig
+from lcms_results_processor.charts import (
+		ChartItem,
+		plot_areas,
+		plot_retention_times,
+		sort_n_filter_by_filename,
+		tex_page,
+		tex_page_landscape
+		)
+from lcms_results_processor.utils import _0_1ug_l, _1ug_l, _10ug_l, _100ug_l, warn_if_all_filtered
 
 chart_items = [
 		ChartItem.from_conditions(
-				current_name=None, sort_order=2,
+				current_name=None,
+				sort_order=2,
 				new_name='',
-				vol=None, esi=None, Repeat=1,
+				vol=None,
+				esi=None,
+				Repeat=1,
 				filename="Propellant_Std_0.1ug_1_200128-0006.d",
 				concentration=_0_1ug_l,
 				),
 		ChartItem.from_conditions(
-				current_name=None, sort_order=3,
+				current_name=None,
+				sort_order=3,
 				new_name='',
-				vol=None, esi=None, Repeat=2,
+				vol=None,
+				esi=None,
+				Repeat=2,
 				filename="Propellant_Std_0.1ug_2_200128-0007.d",
 				concentration=_0_1ug_l,
 				),
 		ChartItem.from_conditions(
-				current_name=None, sort_order=10,
+				current_name=None,
+				sort_order=10,
 				new_name='',
-				vol=None, esi=None, Repeat=1,
+				vol=None,
+				esi=None,
+				Repeat=1,
 				filename="Propellant_Std_1ug_1_200124-0002.d",
 				concentration=_1ug_l,
 				),
 		ChartItem.from_conditions(
-				current_name=None, sort_order=20,
+				current_name=None,
+				sort_order=20,
 				new_name='',
-				vol=None, esi=None, Repeat=2,
+				vol=None,
+				esi=None,
+				Repeat=2,
 				filename="Propellant_Std_1ug_2_200124-0003.d",
 				concentration=_1ug_l,
 				),
 		ChartItem.from_conditions(
-				current_name=None, sort_order=30,
+				current_name=None,
+				sort_order=30,
 				new_name='',
-				vol=None, esi=None, Repeat=1,
+				vol=None,
+				esi=None,
+				Repeat=1,
 				filename="Propellant_Std_10ug_1_200124-0004.d",
 				concentration=_10ug_l,
 				),
 		ChartItem.from_conditions(
-				current_name=None, sort_order=40,
+				current_name=None,
+				sort_order=40,
 				new_name='',
-				vol=None, esi=None, Repeat=2,
+				vol=None,
+				esi=None,
+				Repeat=2,
 				filename="Propellant_Std_10ug_2_200124-0005.d",
 				concentration=_10ug_l,
 				),
 		ChartItem.from_conditions(
-				current_name=None, sort_order=50,
+				current_name=None,
+				sort_order=50,
 				new_name='',
-				vol=None, esi=None, Repeat=3,
+				vol=None,
+				esi=None,
+				Repeat=3,
 				filename="Propellant_Std_10ug_normal_200128-0002.d",
 				concentration=_10ug_l,
 				),
 		ChartItem.from_conditions(
-				current_name=None, sort_order=60,
+				current_name=None,
+				sort_order=60,
 				new_name='',
-				dgf=14, vol=None, esi=None,
+				dgf=14,
+				vol=None,
+				esi=None,
 				filename="Propellant_Std_10ug_DG14_200128-0003.d",
 				concentration=_10ug_l,
 				),
 		ChartItem.from_conditions(
-				current_name=None, sort_order=70,
+				current_name=None,
+				sort_order=70,
 				new_name='',
-				dgt=200, vol=None, esi=None,
+				dgt=200,
+				vol=None,
+				esi=None,
 				filename="Propellant_Std_10ug_GT200_200128-0004.d",
 				concentration=_10ug_l,
 				),
 		ChartItem.from_conditions(
-				current_name=None, sort_order=80,
+				current_name=None,
+				sort_order=80,
 				new_name='',
-				neb=35, vol=None, esi=None,
+				neb=35,
+				vol=None,
+				esi=None,
 				filename="Propellant_Std_10ug_NEB35_200128-0005.d",
 				concentration=_10ug_l,
 				),
 		ChartItem.from_conditions(
-				current_name=None, sort_order=90,
+				current_name=None,
+				sort_order=90,
 				new_name='',
-				vol=None, esi=None, Repeat=1,
+				vol=None,
+				esi=None,
+				Repeat=1,
 				filename="Propellant_Std_100ug_1_200124-0006.d",
 				concentration=_100ug_l,
 				),
 		ChartItem.from_conditions(
-				current_name=None, sort_order=100,
+				current_name=None,
+				sort_order=100,
 				new_name='',
-				vol=None, esi=None, Repeat=2,
+				vol=None,
+				esi=None,
+				Repeat=2,
 				filename="Propellant_Std_100ug_2_200124-0007.d",
 				concentration=_100ug_l,
 				),
@@ -144,12 +176,10 @@ chart_items = [
 		# 		filename="Propellant_Std_10ug_ms_ms_2_200124-0008.d	(ms/ms)",
 		#		concentration=_10ug_l,
 		# 		),
-
 		]
 
 
 def make_charts():
-	from charts_shared import all_samples, mass_calibration_ranges, chdir
 	chdir()
 
 	# Display options for numpy and pandas
@@ -184,5 +214,5 @@ def make_charts():
 	# plt.show()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 	make_charts()

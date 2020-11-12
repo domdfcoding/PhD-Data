@@ -1,24 +1,26 @@
-#  !/usr/bin/env python
-#   -*- coding: utf-8 -*-
+#!/usr/bin/env python3
 #
-#  utils.py
+#  charts.py
 #
 #  Copyright © 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
-#  This program is free software; you can redistribute it and/or modify
-#  it under the terms of the GNU Lesser General Public License as published by
-#  the Free Software Foundation; either version 3 of the License, or
-#  (at your option) any later version.
+#  Permission is hereby granted, free of charge, to any person obtaining a copy
+#  of this software and associated documentation files (the "Software"), to deal
+#  in the Software without restriction, including without limitation the rights
+#  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+#  copies of the Software, and to permit persons to whom the Software is
+#  furnished to do so, subject to the following conditions:
 #
-#  This program is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU Lesser General Public License for more details.
+#  The above copyright notice and this permission notice shall be included in all
+#  copies or substantial portions of the Software.
 #
-#  You should have received a copy of the GNU Lesser General Public License
-#  along with this program; if not, write to the Free Software
-#  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-#  MA 02110-1301, USA.
+#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+#  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+#  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+#  IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+#  DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+#  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+#  OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
 # stdlib
@@ -28,9 +30,11 @@ from typing import Iterable, List, Optional
 # 3rd party
 import pandas
 import sdjson
+from chemistry_tools.units import format_si_units, m_math_space
 from domdf_python_tools.typing import PathLike
 from mh_utils.csv_parser import Sample, SampleList
-from chemistry_tools.units import m_math_space, format_si_units
+
+__all__ = ["load_json_worklist", "make_conditions_label", "warn_if_all_filtered", "concatenate_json"]
 
 
 def load_json_worklist(filename):
@@ -87,7 +91,6 @@ def make_conditions_label(
 	return output_string
 
 
-
 neg_esi: str = "−ESI"
 pos_esi: str = "+ESI"
 sup_1: str = "$^{1}$"  # "\u00B9"
@@ -131,7 +134,7 @@ def warn_if_all_filtered(sample_list: SampleList, filtered_compounds: Iterable[s
 
 def concatenate_json(*files: PathLike, outfile: Optional[PathLike] = None) -> SampleList:
 	r"""
-	Concatenate multiple JSON files together and return a list of :class:`Sample` 
+	Concatenate multiple JSON files together and return a list of :class:`Sample`
 	objects in the concatenated json output.
 
 	:param \*files: The files to concatenate.
@@ -154,4 +157,3 @@ def concatenate_json(*files: PathLike, outfile: Optional[PathLike] = None) -> Sa
 			sdjson.dump(all_samples, fp, indent=2)
 
 	return all_samples
-

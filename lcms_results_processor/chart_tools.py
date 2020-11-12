@@ -1,6 +1,35 @@
+#!/usr/bin/env python3
+#
+#  chart_tools.py
+#
+#  Copyright © 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
+#
+#  Permission is hereby granted, free of charge, to any person obtaining a copy
+#  of this software and associated documentation files (the "Software"), to deal
+#  in the Software without restriction, including without limitation the rights
+#  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+#  copies of the Software, and to permit persons to whom the Software is
+#  furnished to do so, subject to the following conditions:
+#
+#  The above copyright notice and this permission notice shall be included in all
+#  copies or substantial portions of the Software.
+#
+#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+#  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+#  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+#  IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+#  DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+#  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+#  OR OTHER DEALINGS IN THE SOFTWARE.
+#
+
+# stdlib
 import itertools
 from typing import Iterable, Optional, Tuple
 
+# 3rd party
+import matplotlib
+from domdf_python_tools.compat import importlib_resources
 from domdf_python_tools.iterative import chunks
 from domdf_python_tools.pagesizes import PageSize
 from matplotlib import pyplot
@@ -9,19 +38,15 @@ from matplotlib.axes import Axes
 from matplotlib.figure import Figure
 from matplotlib.legend import Legend
 
-
-
-# 3rd party
-import importlib_resources
-import matplotlib
-
 # this package
-import lcms_processor
+import lcms_results_processor
 
 matplotlib.use("TkAgg")
 
 # 3rd party
 import matplotlib.pyplot
+
+__all__ = ["savefig", "horizontal_legend", "create_figure", "plt"]
 
 plt = matplotlib.pyplot
 
@@ -47,7 +72,7 @@ plt = matplotlib.pyplot
 # plt.xkcd()
 
 # >> Fixed version of above
-with importlib_resources.path(lcms_processor, "domdf.mplstyle") as mystyle:
+with importlib_resources.path(lcms_results_processor, "domdf.mplstyle") as mystyle:
 	plt.style.use(str(mystyle))
 
 # >> White background, grey border, greyscale bars
@@ -111,7 +136,7 @@ def create_figure(
 		top: float = 0.13,
 		) -> Tuple[Figure, Axes]:
 	"""
-	Creates a figure with the given margins, 
+	Creates a figure with the given margins,
 	and returns a tuple of the figure and its axes.
 
 	:param pagesize:

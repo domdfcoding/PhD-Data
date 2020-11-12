@@ -1,36 +1,36 @@
-#  !/usr/bin/env python
-#   -*- coding: utf-8 -*-
+#!/usr/bin/env python3
 #
 #  make_charts.py
 #
 #  Copyright © 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
-#  This program is free software; you can redistribute it and/or modify
-#  it under the terms of the GNU Lesser General Public License as published by
-#  the Free Software Foundation; either version 3 of the License, or
-#  (at your option) any later version.
+#  Permission is hereby granted, free of charge, to any person obtaining a copy
+#  of this software and associated documentation files (the "Software"), to deal
+#  in the Software without restriction, including without limitation the rights
+#  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+#  copies of the Software, and to permit persons to whom the Software is
+#  furnished to do so, subject to the following conditions:
 #
-#  This program is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU Lesser General Public License for more details.
+#  The above copyright notice and this permission notice shall be included in all
+#  copies or substantial portions of the Software.
 #
-#  You should have received a copy of the GNU Lesser General Public License
-#  along with this program; if not, write to the Free Software
-#  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-#  MA 02110-1301, USA.
+#  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+#  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+#  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+#  IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+#  DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+#  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+#  OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
 # stdlib
 import json
 import os
 import pathlib
-from pprint import pprint
 
-# this package
-from lcms_processor.charts import plot_areas
-from lcms_processor.tkagg_pyplot import plt
-from lcms_processor.utils import load_json_worklist, load_sample_list, set_display_options
+# 3rd party
+from mathematical.data_frames import set_display_options
+from mh_utils.csv_parser import SampleList
 
 root = pathlib.Path(__file__).parent.parent.parent.absolute()
 os.chdir(root)
@@ -38,7 +38,7 @@ os.chdir(root)
 # Display options for numpy and pandas
 set_display_options()
 
-all_samples = load_sample_list("All Results.json")
+all_samples = SampleList.from_json_file("All Results.json")
 all_samples.sort_samples("sample_name")
 with open("data/mass_calibration_ranges.json") as fp:
 	mass_calibration_ranges = json.load(fp)
@@ -124,9 +124,9 @@ target_samples = all_samples.filter([
 		# 'Propellant Standard 10ug/mL (2)',
 		# 'Propellant Standard 10ug/mL - different method (1)',
 		# 'Propellant Standard 10ug/mL - different method (2)',
-		'Propellant Standard 10ug/mL DG 14',
-		'Propellant Standard 10ug/mL GT 200',
-		'Propellant Standard 10ug/mL NEB 35',
+		"Propellant Standard 10ug/mL DG 14",
+		"Propellant Standard 10ug/mL GT 200",
+		"Propellant Standard 10ug/mL NEB 35",
 		# 'Propellant Standard 10ug/mL ms/ms (1)',
 		# 'Propellant Standard 10ug/mL ms/ms (2)',
 		# 'Propellant Standard 1ug/mL (1)',
@@ -159,10 +159,6 @@ target_samples = all_samples.filter([
 # print(worklist.loc[worklist["Sample Name"].str.startswith("Methanol")])
 #
 #
-
-
-
-
 """
 Sample Name,Method,Data File
 
@@ -262,7 +258,7 @@ EC 1ug/mL  - different method (3),Based on Cannabinoids in Urine.m,EC_1ug_ml_dif
 
 """
 
-
+# 3rd party
 import _01_initial_propellant_std_charts
 import _02_propellant_method_permutations_charts
 import _03_benito_prop_method_permutations_charts

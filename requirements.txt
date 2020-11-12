@@ -1,9 +1,9 @@
-sdjson>=0.2.3
-domdf_python_tools>=1.4.0
-pandas
-numpy
-cawdrey
+chemistry-tools>=0.4.0
+consolekit>=0.3.2
+domdf-python-tools>=1.4.0
 mathematical>=0.3.0
-/home/domdf/Python/01 GitHub Repos/03 Libraries/mh_utils
-matplotlib
-chemistry_tools>=0.4.0
+matplotlib>=3.3.3
+mh-utils>=0.2.0
+numpy>=1.19.4
+pandas>=1.1.4
+sdjson>=0.2.3
