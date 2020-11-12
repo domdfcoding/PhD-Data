@@ -23,7 +23,6 @@
 #  OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-
 # stdlib
 from typing import List
 

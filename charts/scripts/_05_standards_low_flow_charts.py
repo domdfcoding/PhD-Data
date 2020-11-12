@@ -130,7 +130,9 @@ def make_charts():
 	fig, ax = create_figure(tex_page_landscape, left=0.23)
 	fig, ax = plot_areas(fig, ax, target_samples, all_identified_compounds, include_none=True, show_scores=True)
 	fig.suptitle(
-			"Peak Areas and Scores for Standards with Reduced Flow Rate", fontsize=14, y=0.985,
+			"Peak Areas and Scores for Standards with Reduced Flow Rate",
+			fontsize=14,
+			y=0.985,
 			)  # Put actual number
 	ax.set_ylabel("Concentration and Conditions")
 	# fig.subplots_adjust(bottom=0.11, top=0.90)

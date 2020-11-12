@@ -23,7 +23,6 @@
 #  OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-
 # 3rd party
 from charts_shared import all_samples, chdir, mass_calibration_ranges
 from mathematical.data_frames import set_display_options

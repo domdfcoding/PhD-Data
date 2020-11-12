@@ -23,10 +23,6 @@
 #  OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-
-# stdlib
-import json
-
 # 3rd party
 import pandas
 from domdf_python_tools.paths import PathPlus

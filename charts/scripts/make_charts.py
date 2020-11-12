@@ -159,7 +159,7 @@ target_samples = all_samples.filter([
 # print(worklist.loc[worklist["Sample Name"].str.startswith("Methanol")])
 #
 #
-"""
+samples = """
 Sample Name,Method,Data File
 
 # Alliant Unique pos and neg
