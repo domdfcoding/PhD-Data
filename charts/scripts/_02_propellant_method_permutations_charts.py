@@ -25,10 +25,10 @@
 from lcms_processor.charts import (
 	A4_portrait,
 	ChartItem,
-	plot_areas,
-	sort_n_filter_by_filename,
-	update_all_labels_with_cal_range
-)
+	create_figure, plot_areas,
+	plot_retention_times, sort_n_filter_by_filename,
+	tex_page, tex_page_landscape, update_all_labels_with_cal_range,
+	)
 from lcms_processor.tkagg_pyplot import plt, savefig
 from lcms_processor.utils import _1ug_l, set_display_options, warn_if_all_filtered
 
@@ -230,29 +230,42 @@ def make_charts():
 	warn_if_all_filtered(ug_target_samples, ["Nitrobenzene"])
 	warn_if_all_filtered(mg_target_samples, ["Nitrobenzene"])
 
-	fig, ax = plot_areas(ug_target_samples, all_identified_compounds, include_none=True, show_scores=True, legend_cols=3)
+	fig, ax = create_figure(tex_page, left=0.155, top=0.09)
+
+	fig, ax = plot_areas(fig, ax, ug_target_samples, all_identified_compounds, include_none=True, show_scores=True, legend_cols=3)
 	fig.suptitle("Peak Areas and Scores for Alliant Unique Propellant", fontsize=14, y=0.985)
 
-	fig.set_size_inches(A4_portrait)
-	fig.tight_layout()
-	fig.subplots_adjust(bottom=0.13, top=0.91)
+	# fig.set_size_inches(A4_portrait)
+	# fig.tight_layout()
+	# fig.subplots_adjust(bottom=0.13, top=0.91)
 
 	savefig(fig, "charts/propellant_5ul_injection_micro.png", dpi=300)
 	savefig(fig, "charts/propellant_5ul_injection_micro.svg")
 
-	#
+	fig, ax = create_figure(tex_page, left=0.155, top=0.09)
 
-	fig, ax = plot_areas(mg_target_samples, all_identified_compounds, include_none=True, show_scores=True, legend_cols=3)
+	fig, ax = plot_areas(fig, ax, mg_target_samples, all_identified_compounds, include_none=True, show_scores=True, legend_cols=3)
 	fig.suptitle("Peak Areas and Scores for Alliant Unique Propellant", fontsize=14, y=0.985)
 
-	fig.set_size_inches(A4_portrait)
-	fig.tight_layout()
-	fig.subplots_adjust(bottom=0.13, top=0.91)
+	# fig.set_size_inches(A4_portrait)
+	# fig.tight_layout()
+	# fig.subplots_adjust(bottom=0.13, top=0.91)
 
 	savefig(fig, "charts/propellant_5ul_injection_milli.png", dpi=300)
 	savefig(fig, "charts/propellant_5ul_injection_milli.svg")
 
 	# plt.show()
+
+	fig, ax = create_figure(tex_page, left=0.15, bottom=0.17)
+
+	fig, ax = plot_retention_times(fig, ax, ug_target_samples, ug_target_samples.get_compounds(), legend_cols=3)
+	ax.set_ylabel("Concentration and Conditions")
+
+	fig, ax = create_figure(tex_page, left=0.15, bottom=0.17)
+	fig, ax = plot_retention_times(fig, ax, mg_target_samples, mg_target_samples.get_compounds(), legend_cols=3)
+	ax.set_ylabel("Concentration and Conditions")
+
+	plt.show()
 
 
 if __name__ == '__main__':

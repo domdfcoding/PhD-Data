@@ -22,15 +22,19 @@
 #
 
 # this package
+from pprint import pprint
 from typing import List
+
+import numpy
+import pandas
 
 from lcms_processor.charts import (
 	A4_portrait,
 	ChartItem,
-	plot_areas,
-	sort_n_filter_by_filename,
-	update_all_labels_with_cal_range
-)
+	create_figure, make_rt_dataframe, plot_areas,
+	plot_retention_times, sort_n_filter_by_filename,
+	tex_page, tex_page_landscape, update_all_labels_with_cal_range,
+	)
 from lcms_processor.tkagg_pyplot import plt, savefig  # isort: skip
 from lcms_processor.utils import _1mg_l, _1ug_l, _10mg_l, set_display_options, sup_1, sup_2, warn_if_all_filtered
 
@@ -152,15 +156,33 @@ def make_charts():
 	all_identified_compounds.remove("Nitrobenzene")
 	warn_if_all_filtered(target_samples, ["Nitrobenzene"])
 
-	fig, ax = plot_areas(target_samples, all_identified_compounds, show_scores=True)  # , include_none=True, legend_cols=3)
-	fig.suptitle("Peak Areas and Scores for Alliant Unique Propellant", fontsize=14, y=0.985)
+	# fig, ax = create_figure(tex_page_landscape, left=0.165, bottom=0.17)  # without units
+	fig, ax = create_figure(tex_page_landscape, left=0.135, bottom=0.17, top=0.09)
+	fig, ax = plot_areas(fig, ax, target_samples, all_identified_compounds, show_scores=True, legend_cols=4, mz_range=(50, 1700))  # , include_none=True)
+	# fig.suptitle("Peak Areas and Scores for Alliant Unique Propellant", fontsize=14, y=0.985)
+	ax.set_ylabel("Concentration and Conditions")
 
-	# fig.set_size_inches(A4_portrait)
-	fig.tight_layout()
-	fig.subplots_adjust(bottom=0.13, top=0.91)
-
-	savefig(fig, "charts/benito_method_perms_propellant.png", dpi=300)
+	savefig(fig, "charts/benito_method_perms_propellant.png", dpi=600)
 	savefig(fig, "charts/benito_method_perms_propellant.svg")
+
+	# plt.show()
+	fig, ax = create_figure(tex_page, left=0.215, bottom=0.13, top=0.02)
+
+	fig, ax = plot_retention_times(fig, ax, target_samples, target_samples.get_compounds(), legend_cols=3)
+	ax.set_ylabel("Concentration and Conditions")
+
+	rt_data = make_rt_dataframe(target_samples.get_compounds(), target_samples)
+	for compound, data in rt_data.iteritems():
+		print(compound)
+		stdev = numpy.nanstd(data)
+		mean = numpy.nanmean(data)
+		print(mean)
+		rsd = stdev / mean
+		print(f"{rsd:.3%}")
+		print()
+
+	savefig(fig, "charts/benito_method_perms_propellant_rt.png", dpi=600)
+	savefig(fig, "charts/benito_method_perms_propellant_rt.svg")
 
 	# plt.show()
 

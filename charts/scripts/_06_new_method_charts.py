@@ -25,10 +25,10 @@
 from lcms_processor.charts import (
 	A4_portrait,
 	ChartItem,
-	plot_areas,
+	create_figure, plot_areas,
 	sort_n_filter_by_filename,
-	update_all_labels_with_cal_range
-)
+	tex_page_landscape, update_all_labels_with_cal_range,
+	)
 from lcms_processor.tkagg_pyplot import plt, savefig
 from lcms_processor.utils import (
 	_1mg_l, _1ug_l, _1ul, _10ug_l, set_display_options, sup_1, sup_2, sup_3,
@@ -163,19 +163,26 @@ def make_charts():
 	ec_dpa_identified_compounds.remove("Nitrobenzene")
 	warn_if_all_filtered(ec_dpa_target_samples, ["Nitrobenzene"])
 
-	fig, ax = plot_areas(ec_dpa_target_samples, ec_dpa_identified_compounds, include_none=True, show_scores=True, legend_cols=3)
-	fig.suptitle("Peak Areas and Scores with Method 3", fontsize=14, y=0.985)
+	fig, ax = create_figure(tex_page_landscape, left=0.15, bottom=0.17, top=0.1)
+	fig, ax = plot_areas(
+			fig,
+			ax,
+			ec_dpa_target_samples,
+			ec_dpa_identified_compounds,
+			include_none=True,
+			show_scores=True,
+			legend_cols=4,
+			show_score_in_legend=True,
+			)
+	# fig.suptitle("Peak Areas and Scores with Method 3", fontsize=14, y=0.985)
 	ax.set_ylabel("Concentration and Conditions")
-	# fig.subplots_adjust(bottom=0.11, top=0.90)
+	fig.text(0.739, 0.026, "\u00B9\u00B2\u00B3", fontsize=9, zorder=20)
+	fig.text(0.762, 0.026, "Repeat analyses", fontsize=9, zorder=20)
 
-	fig.set_size_inches(A4_portrait)
-	fig.tight_layout()
-	fig.subplots_adjust(bottom=0.13, top=0.91)
-
-	savefig(fig, "charts/new_method_standards.png", dpi=300)
+	savefig(fig, "charts/new_method_standards.png", dpi=600)
 	savefig(fig, "charts/new_method_standards.svg")
 
-	update_all_labels_with_cal_range(std_mix_chart_items, mass_calibration_ranges, ["50", "1700"])
+	# update_all_labels_with_cal_range(std_mix_chart_items, mass_calibration_ranges, ["50", "1700"])
 
 	# Filter samples, reorder and rename
 	std_mix_target_samples = sort_n_filter_by_filename(all_samples, std_mix_chart_items)
@@ -185,16 +192,24 @@ def make_charts():
 	std_mix_identified_compounds.remove("Nitrobenzene")
 	warn_if_all_filtered(std_mix_target_samples, ["Nitrobenzene"])
 
-	fig, ax = plot_areas(std_mix_target_samples, std_mix_identified_compounds, include_none=True, show_scores=True, legend_cols=3)
-	fig.suptitle("Peak Areas and Scores for Mixed Standard with Method 3", fontsize=14, y=0.985)
-	ax.set_ylabel("Concentration and Conditions")
-	# fig.subplots_adjust(bottom=0.11, top=0.90)
+	# fig, ax = create_figure(tex_page_landscape, left=0.2, bottom=0.2)  # With mz range
+	fig, ax = create_figure(tex_page_landscape, left=0.11, bottom=0.2, top=0.1)  # Without mz range
+	fig, ax = plot_areas(
+			fig,
+			ax,
+			std_mix_target_samples,
+			std_mix_identified_compounds,
+			include_none=True,
+			show_scores=True,
+			legend_cols=4,
+			# mz_range=(100, 3200)
+			show_score_in_legend=True,
+			)
+	# fig.suptitle("Peak Areas and Scores for Mixed Standard with Method 3", fontsize=14, y=0.985)
+	ax.set_ylabel("Concentration")  #  and Conditions
+	fig.text(0.637, 0.026, "Calibration Range: $100-3200~m/z$", fontsize=9, zorder=20)
 
-	fig.set_size_inches(A4_portrait)
-	fig.tight_layout()
-	fig.subplots_adjust(bottom=0.13, top=0.91)
-	#
-	savefig(fig, "charts/new_method_mixed_standard.png", dpi=300)
+	savefig(fig, "charts/new_method_mixed_standard.png", dpi=600)
 	savefig(fig, "charts/new_method_mixed_standard.svg")
 
 	# plt.show()

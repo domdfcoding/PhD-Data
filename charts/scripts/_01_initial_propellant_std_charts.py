@@ -24,10 +24,10 @@
 # this package
 from lcms_processor.charts import (
 	ChartItem,
-	plot_areas,
-	sort_n_filter_by_filename,
-	update_all_labels_with_cal_range
-)
+	create_figure, plot_areas,
+	plot_retention_times, sort_n_filter_by_filename,
+	tex_page, tex_page_landscape, update_all_labels_with_cal_range,
+	)
 from lcms_processor.utils import _1mg_l, _1ug_l, _2ul, set_display_options, warn_if_all_filtered
 
 from lcms_processor.tkagg_pyplot import plt, savefig
@@ -83,7 +83,8 @@ def make_charts():
 	# all_identified_compounds.remove("Nitrobenzene")
 	warn_if_all_filtered(target_samples, ["Nitrobenzene"])
 
-	fig, ax = plot_areas(target_samples, all_identified_compounds, include_none=True, show_scores=True)
+	fig, ax = create_figure(tex_page_landscape, left=0.12)
+	fig, ax = plot_areas(fig, ax, target_samples, all_identified_compounds, include_none=True, show_scores=True)
 	fig.suptitle("Peak Areas and Scores for Alliant Unique Propellant", fontsize=14, y=0.985)
 	# fig.subplots_adjust(bottom=0.11, top=0.90)
 
@@ -97,6 +98,14 @@ def make_charts():
 	# print(worklist.loc["Methanol Blank"])
 	# print(worklist.loc[worklist["Sample Name"] == "Methanol Blank"])
 	# print(worklist.loc[worklist["Sample Name"].str.startswith("Methanol")])
+
+	fig, ax = create_figure(tex_page, left=0.15, bottom=0.17)
+
+	fig, ax = plot_retention_times(fig, ax, target_samples, target_samples.get_compounds(), legend_cols=3)
+	fig.suptitle("Retention Times for Alliant Unique Propellant", fontsize=14, y=0.985)
+	ax.set_ylabel("Concentration and Conditions")
+
+	plt.show()
 
 
 if __name__ == '__main__':

@@ -25,10 +25,10 @@
 from lcms_processor.charts import (
 	A4_portrait,
 	ChartItem,
-	plot_areas,
+	create_figure, plot_areas,
 	sort_n_filter_by_filename,
-	update_all_labels_with_cal_range
-)
+	tex_page_landscape, update_all_labels_with_cal_range,
+	)
 from lcms_processor.tkagg_pyplot import plt, savefig
 from lcms_processor.utils import _0_1ug_l, _1ug_l, set_display_options, sup_1, sup_2, warn_if_all_filtered
 
@@ -117,17 +117,18 @@ def make_charts():
 	all_identified_compounds.remove("Nitrobenzene")
 	warn_if_all_filtered(target_samples, ["Nitrobenzene"])
 
-	fig, ax = plot_areas(target_samples, all_identified_compounds, include_none=True, show_scores=True)
+	fig, ax = create_figure(tex_page_landscape, left=0.23)
+	fig, ax = plot_areas(fig, ax, target_samples, all_identified_compounds, include_none=True, show_scores=True)
 	fig.suptitle("Peak Areas and Scores for Standards with Reduced Flow Rate", fontsize=14, y=0.985)  # Put actual number
 	ax.set_ylabel("Concentration and Conditions")
 	# fig.subplots_adjust(bottom=0.11, top=0.90)
 
 	# fig.set_size_inches(to_inch(A4_landscape))
-	fig.tight_layout()
-	fig.subplots_adjust(bottom=0.11, top=0.90)
+	# fig.tight_layout()
+	# fig.subplots_adjust(bottom=0.11, top=0.90)
 
-	savefig(fig, "standards_low_flow.png", dpi=300)
-	savefig(fig, "standards_low_flow.svg")
+	savefig(fig, "charts/standards_low_flow.png", dpi=300)
+	savefig(fig, "charts/standards_low_flow.svg")
 
 	# plt.show()
 

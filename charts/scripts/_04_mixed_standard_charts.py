@@ -26,10 +26,10 @@ from lcms_processor.charts import (
 	A4_portrait,
 	A5_landscape,
 	ChartItem,
-	plot_areas,
-	sort_n_filter_by_filename,
-	update_all_labels_with_cal_range
-)
+	create_figure, plot_areas,
+	plot_retention_times, sort_n_filter_by_filename,
+	tex_page, tex_page_landscape, update_all_labels_with_cal_range,
+	)
 from lcms_processor.tkagg_pyplot import plt, savefig
 from lcms_processor.utils import (
 	_0_1ug_l,
@@ -155,7 +155,7 @@ def make_charts():
 	# Display options for numpy and pandas
 	set_display_options()
 
-	update_all_labels_with_cal_range(chart_items, mass_calibration_ranges, ["50", "1700"])
+	# update_all_labels_with_cal_range(chart_items, mass_calibration_ranges, ["50", "1700"])
 
 	# Filter samples, reorder and rename
 	target_samples = sort_n_filter_by_filename(all_samples, chart_items)
@@ -165,17 +165,21 @@ def make_charts():
 	all_identified_compounds.remove("Nitrobenzene")
 	warn_if_all_filtered(target_samples, ["Nitrobenzene"])
 
-	fig, ax = plot_areas(target_samples, all_identified_compounds, show_scores=True)  # , include_none=True, legend_cols=3)
-	fig.suptitle("Peak Areas and Scores for Mixed Standard", fontsize=14, y=0.985)
+	# fig, ax = create_figure(tex_page_landscape, left=0.2)  # With m/z Range indicated
+	fig, ax = create_figure(tex_page_landscape, left=0.125, top=0.09)  # Without m/z Range indicated
+	fig, ax = plot_areas(fig, ax, target_samples, all_identified_compounds, show_scores=True, mz_range=(100, 3200))  # , include_none=True, legend_cols=3)
+	# fig.suptitle("Peak Areas and Scores for Mixed Standard", fontsize=14, y=0.985)
 	ax.set_ylabel("Concentration and Conditions")
-	# fig.subplots_adjust(bottom=0.11, top=0.90)
 
-	# fig.set_size_inches(A4_portrait)
-	fig.tight_layout()
-	fig.subplots_adjust(bottom=0.13, top=0.91)
-
-	savefig(fig, "charts/mixed_standards.png", dpi=300)
+	savefig(fig, "charts/mixed_standards.png", dpi=600)
 	savefig(fig, "charts/mixed_standards.svg")
+
+	# plt.show()
+
+	fig, ax = create_figure(tex_page, left=0.15, bottom=0.17)
+
+	fig, ax = plot_retention_times(fig, ax, target_samples, target_samples.get_compounds(), legend_cols=3)
+	ax.set_ylabel("Concentration and Conditions")
 
 	# plt.show()
 

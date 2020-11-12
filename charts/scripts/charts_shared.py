@@ -14,7 +14,7 @@ def chdir():
 chdir()
 
 
-all_samples = load_sample_list("All Results.json")
+all_samples = load_sample_list("data/All Results.json")
 all_samples.sort_samples("sample_name")
 
 with open("data/mass_calibration_ranges.json") as fp:
