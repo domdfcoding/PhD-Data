@@ -13,3 +13,13 @@ enable_conda: false
 enable_tests: false
 enable_docs: false
 on_pypi: false
+
+python_versions:
+ - 3.6
+ - 3.7
+ - 3.8
+ - 3.9
+
+exclude_files:
+ - issue_templates
+ - actions
