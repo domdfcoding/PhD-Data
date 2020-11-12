@@ -1,5 +1,9 @@
-sdjson >= 0.2.3
-domdf_python_tools >= 0.2.6
+sdjson>=0.2.3
+domdf_python_tools>=1.4.0
 pandas
 numpy
 cawdrey
+mathematical>=0.3.0
+/home/domdf/Python/01 GitHub Repos/03 Libraries/mh_utils
+matplotlib
+chemistry_tools>=0.4.0

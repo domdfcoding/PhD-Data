@@ -1,20 +1,16 @@
 import json
 
 import pandas
+from domdf_python_tools.paths import PathPlus
 
-from lcms_processor.utils import (
-	set_display_options,
-	)
+from mathematical.data_frames import set_display_options
 
-# Display options for numpy and pandas
 set_display_options()
 
 worklist = pandas.read_json("data/worklist.json")
-with open("data/mass_calibration_ranges.json") as fp:
-	mass_calibration_ranges = json.load(fp)
-
 worklist = worklist.set_index(["Data File"])
 
+mass_calibration_ranges = PathPlus("data/mass_calibration_ranges.json").load_json()
 worklist['MZ Range'] = worklist.index.map(mass_calibration_ranges)
 
 
@@ -26,9 +22,10 @@ set_default_value(worklist, "Drying Gas", 16, int)  # l/min
 set_default_value(worklist, "Nebulizer", 40, int)  # psig
 set_default_value(worklist, "Gas Temp", 250, int)  # C
 
-print(worklist)
 
+print(worklist)
 print(worklist.loc["Methanol_Blank_+ve_191121-0001-r001.d"]["Gas Temp"])
+
 
 # Remove samples from 5th March that there aren't datafiles for
 worklist = worklist.drop([

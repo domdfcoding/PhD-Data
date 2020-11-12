@@ -21,103 +21,10 @@
 #  MA 02110-1301, USA.
 #
 
-# stdlib
-import os
-import pathlib
-import time
-from typing import List, Optional, Tuple, Union
-
-# 3rd party
-from pandas import DataFrame
-from chemistry_tools.formulae import Formula
-from chemistry_tools.names import get_IUPAC_sort_order
-from chemistry_tools.pubchem.description import get_common_name, get_compound_id
-from chemistry_tools.pubchem.errors import NotFoundError
-from chemistry_tools.pubchem.properties import get_properties
-
-# this package
-from lcms_processor.utils import set_display_options
+from mathematical.data_frames import set_display_options
+from mh_utils.pcdl import make_pcdl_csv
 
 set_display_options()
-
-
-class PCDLCompound:
-	formula: Optional[Formula]
-	exact_mass: Optional[float]
-
-	def __init__(
-			self,
-			name: str,
-			cas: Optional[str] = None,
-			):
-
-		try:
-			self.name = get_common_name(name)
-			self.pubchem_id = get_compound_id(name)
-		except NotFoundError:
-			self.name = name
-			self.pubchem_id = None
-
-		self.cas = cas
-
-		try:
-			properties = get_properties(self.name, "IUPACName, MolecularFormula")[0]
-			self.iupac_name = properties["IUPACName"]
-			self.formula = properties["MolecularFormula"]
-			self.exact_mass = self.formula.exact_mass
-		except NotFoundError:
-			print(name)
-			self.iupac_name = self.name
-			self.formula = None
-			self.exact_mass = None
-
-
-def compound_list_2_pandas(compound_list: List[PCDLCompound]) -> DataFrame:
-	columns = ["Name", "CAS", "IUPAC", "Formula", "Mass", "PubChem"]
-	data: List[List[str]] = []
-
-	for compound in compound_list:
-		row: List[str] = [compound.name, compound.cas, compound.iupac_name]
-
-		if compound.formula:
-			row.append(compound.formula.hill_formula)
-			row.append(str(compound.exact_mass))
-			row.append(str(compound.pubchem_id))
-			data.append(row)
-
-	df = DataFrame(data, columns=columns)
-	df = df.reindex(
-			[
-					"Name", "Formula", "Mass", "Retention Time", "Retention Index", "Cation", "Anion", "CAS",
-					"ChemSpider", "PubChem", "Synonyms", "IUPAC", "NumSpectra", "CCS Count",
-					], axis=1)
-
-	names = df["IUPAC"]
-	sort_order = get_IUPAC_sort_order(names)
-	df = df.loc[df['IUPAC'].map(sort_order).sort_values(ascending=True).index]
-
-	return df
-
-
-def make_pcdl_csv(
-		outfile: Union[str, pathlib.Path, os.PathLike],
-		target_compounds: List[Tuple[str, str]],
-		) -> DataFrame:
-
-	if not isinstance(outfile, pathlib.Path):
-		outfile = pathlib.Path(outfile)
-
-	compound_list: List[PCDLCompound] = []
-
-	for name, cas in target_compounds:
-		compound = PCDLCompound(name, cas)
-		time.sleep(0.25)
-		compound_list.append(compound)
-
-	compounds_df = compound_list_2_pandas(compound_list)
-	compounds_df.to_csv(outfile, index=False)
-
-	return compounds_df
 
 
 target_compounds = [
@@ -345,4 +252,4 @@ target_compounds = [
 		]
 
 
-print(make_pcdl_csv("all_compounds_pcdl.csv", target_compounds))
+print(make_pcdl_csv(target_compounds, "all_compounds_pcdl.csv"))
