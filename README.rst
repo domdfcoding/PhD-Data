@@ -29,17 +29,17 @@ All data copyright 2019-2020 Dominic Davis-Foster
 
 
 
-.. |travis| image:: https://img.shields.io/travis/com/domdfcoding/lcms_results_processor/master?logo=travis
-	:target: https://travis-ci.com/domdfcoding/lcms_results_processor
-	:alt: Travis Build Status
+.. |travis| image:: https://github.com/domdfcoding/lcms_results_processor/workflows/Linux%20Tests/badge.svg
+	:target: https://github.com/domdfcoding/lcms_results_processor/actions?query=workflow%3A%22Linux+Tests%22
+	:alt: Linux Test Status
 
 .. |actions_windows| image:: https://github.com/domdfcoding/lcms_results_processor/workflows/Windows%20Tests/badge.svg
 	:target: https://github.com/domdfcoding/lcms_results_processor/actions?query=workflow%3A%22Windows+Tests%22
-	:alt: Windows Tests Status
+	:alt: Windows Test Status
 
 .. |actions_macos| image:: https://github.com/domdfcoding/lcms_results_processor/workflows/macOS%20Tests/badge.svg
 	:target: https://github.com/domdfcoding/lcms_results_processor/actions?query=workflow%3A%22macOS+Tests%22
-	:alt: macOS Tests Status
+	:alt: macOS Test Status
 
 .. |requires| image:: https://requires.io/github/domdfcoding/lcms_results_processor/requirements.svg?branch=master
 	:target: https://requires.io/github/domdfcoding/lcms_results_processor/requirements/?branch=master
