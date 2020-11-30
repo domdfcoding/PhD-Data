@@ -29,9 +29,11 @@ from typing import List
 # 3rd party
 import numpy
 from charts_shared import all_samples, chdir, mass_calibration_ranges
+from domplotlib import create_figure
 from mathematical.data_frames import set_display_options
 
 # this package
+from lcms_results_processor.chart_tools import savefig
 from lcms_results_processor.charts import (
 		ChartItem,
 		make_rt_dataframe,
@@ -43,8 +45,6 @@ from lcms_results_processor.charts import (
 		update_all_labels_with_cal_range
 		)
 from lcms_results_processor.utils import _1mg_l, _1ug_l, _10mg_l, sup_1, sup_2, warn_if_all_filtered
-
-from lcms_results_processor.chart_tools import create_figure, savefig  # isort: skip
 
 chart_items = [
 		ChartItem.from_conditions(

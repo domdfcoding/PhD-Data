@@ -34,6 +34,7 @@ import pandas
 from domdf_python_tools import pagesizes
 from domdf_python_tools.iterative import chunks
 from domdf_python_tools.typing import PathLike
+from domplotlib.styles.domdf import plt
 from mathematical.data_frames import set_display_options
 from matplotlib.axes import Axes
 from matplotlib.collections import PathCollection
@@ -42,7 +43,6 @@ from matplotlib.patches import Rectangle
 from mh_utils.csv_parser import SampleList
 
 # this package
-from lcms_results_processor.chart_tools import plt
 from lcms_results_processor.utils import format_si_units, make_conditions_label
 
 __all__ = [

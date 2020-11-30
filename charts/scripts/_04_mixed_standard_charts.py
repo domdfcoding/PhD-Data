@@ -25,10 +25,11 @@
 
 # 3rd party
 from charts_shared import all_samples, chdir
+from domplotlib import create_figure
 from mathematical.data_frames import set_display_options
 
 # this package
-from lcms_results_processor.chart_tools import create_figure, savefig
+from lcms_results_processor.chart_tools import savefig
 from lcms_results_processor.charts import (
 		ChartItem,
 		plot_areas,

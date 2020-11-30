@@ -1,5 +1,6 @@
 chemistry-tools>=0.4.0
 domdf-python-tools>=1.4.0
+domplotlib>=0.1.0
 mathematical>=0.3.0
 matplotlib>=3.3.3
 mh-utils>=0.2.0
