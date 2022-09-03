@@ -48,8 +48,8 @@ All data copyright 2019-2020 Dominic Davis-Foster
 	:target: https://github.com/domdfcoding/lcms_results_processor/actions?query=workflow%3A%22mypy%22
 	:alt: mypy status
 
-.. |requires| image:: https://dependency-dash.herokuapp.com/github/domdfcoding/lcms_results_processor/badge.svg
-	:target: https://dependency-dash.herokuapp.com/github/domdfcoding/lcms_results_processor/
+.. |requires| image:: https://dependency-dash.repo-helper.uk/github/domdfcoding/lcms_results_processor/badge.svg
+	:target: https://dependency-dash.repo-helper.uk/github/domdfcoding/lcms_results_processor/
 	:alt: Requirements Status
 
 .. |codefactor| image:: https://img.shields.io/codefactor/grade/github/domdfcoding/lcms_results_processor?logo=codefactor
