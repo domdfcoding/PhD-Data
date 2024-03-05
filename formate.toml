@@ -58,5 +58,5 @@ known_third_party = [
     "sphinxemoji",
     "tabulate",
 ]
-known_first_party = "lcms_results_processor"
+known_first_party = [ "lcms_results_processor",]
 line_length = 115
