@@ -4,7 +4,7 @@ lcms_results_processor
 
 .. start short_desc
 
-** **
+****
 
 .. end short_desc
 
@@ -24,7 +24,7 @@ All data copyright 2019-2020 Dominic Davis-Foster
 	* - Activity
 	  - |commits-latest| |commits-since| |maintained|
 	* - QA
-	  - |codefactor| |actions_flake8| |actions_mypy| |pre_commit_ci|
+	  - |codefactor| |actions_flake8| |actions_mypy|
 	* - Other
 	  - |license| |language| |requires|
 
@@ -48,8 +48,8 @@ All data copyright 2019-2020 Dominic Davis-Foster
 	:target: https://github.com/domdfcoding/lcms_results_processor/actions?query=workflow%3A%22mypy%22
 	:alt: mypy status
 
-.. |requires| image:: https://requires.io/github/domdfcoding/lcms_results_processor/requirements.svg?branch=master
-	:target: https://requires.io/github/domdfcoding/lcms_results_processor/requirements/?branch=master
+.. |requires| image:: https://dependency-dash.repo-helper.uk/github/domdfcoding/lcms_results_processor/badge.svg
+	:target: https://dependency-dash.repo-helper.uk/github/domdfcoding/lcms_results_processor/
 	:alt: Requirements Status
 
 .. |codefactor| image:: https://img.shields.io/codefactor/grade/github/domdfcoding/lcms_results_processor?logo=codefactor
@@ -71,11 +71,7 @@ All data copyright 2019-2020 Dominic Davis-Foster
 	:target: https://github.com/domdfcoding/lcms_results_processor/commit/master
 	:alt: GitHub last commit
 
-.. |maintained| image:: https://img.shields.io/maintenance/yes/2021
+.. |maintained| image:: https://img.shields.io/maintenance/yes/2024
 	:alt: Maintenance
-
-.. |pre_commit_ci| image:: https://results.pre-commit.ci/badge/github/domdfcoding/lcms_results_processor/master.svg
-	:target: https://results.pre-commit.ci/latest/github/domdfcoding/lcms_results_processor/master
-	:alt: pre-commit.ci status
 
 .. end shields

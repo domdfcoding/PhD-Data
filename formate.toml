@@ -4,23 +4,19 @@ collections-import-rewrite = 20
 reformat-generics = 40
 noqa-reformat = 60
 ellipsis-reformat = 70
-
-[config]
-indent = "\t"
-line_length = 115
+squish_stubs = 80
 
 [hooks.yapf]
 priority = 30
 
-[hooks.isort]
-priority = 50
-
 [hooks.yapf.kwargs]
 yapf_style = ".style.yapf"
 
+[hooks.isort]
+priority = 50
+
 [hooks.isort.kwargs]
-line_length = 115
-indent = "\"\t\t\""
+indent = "		"
 multi_line_output = 8
 import_heading_stdlib = "stdlib"
 import_heading_thirdparty = "3rd party"
@@ -58,4 +54,9 @@ known_third_party = [
     "sphinxemoji",
     "tabulate",
 ]
-known_first_party = "lcms_results_processor"
+known_first_party = [ "lcms_results_processor",]
+line_length = 115
+
+[config]
+indent = "	"
+line_length = 115
