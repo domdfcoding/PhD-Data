@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 #
 #  charts.py
+"""
+
+"""
 #
 #  Copyright © 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
@@ -28,7 +31,7 @@ from numbers import Number
 from typing import Iterable, List, Optional
 
 # 3rd party
-import pandas
+import pandas  # type: ignore[import]
 import sdjson
 from chemistry_tools.units import format_si_units, m_math_space
 from domdf_python_tools.typing import PathLike
@@ -37,7 +40,13 @@ from mh_utils.csv_parser import Sample, SampleList
 __all__ = ["load_json_worklist", "make_conditions_label", "warn_if_all_filtered", "concatenate_json"]
 
 
-def load_json_worklist(filename):
+def load_json_worklist(filename: PathLike) -> pandas.DataFrame:
+	"""
+	Load a worklist from a JSON file as a pandas DataFrame.
+
+	:param filename:
+	"""
+
 	worklist = pandas.read_json(filename)
 	return worklist
 
@@ -49,7 +58,7 @@ def make_conditions_label(
 		dgt: Optional[float] = None,
 		dgf: Optional[float] = None,
 		neb: Optional[float] = None,
-		vol=format_si_units(5, "µL"),
+		vol: str = format_si_units(5, "µL"),
 		**kwargs,
 		) -> str:
 	r"""
@@ -146,14 +155,14 @@ def concatenate_json(*files: PathLike, outfile: Optional[PathLike] = None) -> Sa
 	all_samples = SampleList()
 
 	for json_file in files:
-		with open(json_file) as fp:
+		with open(json_file, encoding="UTF-8") as fp:
 			samples = sdjson.load(fp)
 
 		for sample in samples:
 			all_samples.append(Sample(**sample))
 
 	if outfile is not None:
-		with open(outfile, 'w') as fp:
+		with open(outfile, 'w', encoding="UTF-8") as fp:
 			sdjson.dump(all_samples, fp, indent=2)
 
 	return all_samples

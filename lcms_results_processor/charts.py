@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 #
 #  charts.py
+"""
+
+"""
 #
 #  Copyright © 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
@@ -25,21 +28,23 @@
 
 # stdlib
 import itertools
+import os
 from typing import Dict, Iterable, List, Optional, Sequence, Tuple, Union
 
 # 3rd party
-import matplotlib.ticker as plticker
+import matplotlib.ticker as plticker  # type: ignore[import]
 import numpy
-import pandas
+import pandas  # type: ignore[import]
 from domdf_python_tools import pagesizes
 from domdf_python_tools.iterative import chunks
 from domdf_python_tools.typing import PathLike
-from domplotlib.styles.domdf import plt
+from domplotlib.styles.domdf import plt  # type: ignore[import]
 from mathematical.data_frames import set_display_options
-from matplotlib.axes import Axes
-from matplotlib.collections import PathCollection
-from matplotlib.figure import Figure
-from matplotlib.patches import Rectangle
+from matplotlib.axes import Axes  # type: ignore[import]
+from matplotlib.collections import PathCollection  # type: ignore[import]
+from matplotlib.figure import Figure  # type: ignore[import]
+from matplotlib.legend import Legend  # type: ignore[import]
+from matplotlib.patches import Rectangle  # type: ignore[import]
 from mh_utils.csv_parser import SampleList
 
 # this package
@@ -69,9 +74,13 @@ tex_page = pagesizes.PageSize(426, 674 * 0.9).inch
 tex_page_landscape = pagesizes.PageSize(426 * 0.9, 674).inch.landscape()
 
 
-def plot_area_and_score(samples: SampleList, compound_name: str, include_none: bool = False):
+def plot_area_and_score(
+		samples: SampleList,
+		compound_name: str,
+		include_none: bool = False,
+		) -> Tuple[Figure, Axes, Axes]:
 	"""
-	Plot the peak area and score for the compound with the given name
+	Plot the peak area and score for the compound with the given name.
 
 	:param samples: A list of samples to plot on the chart
 	:param compound_name:
@@ -82,8 +91,7 @@ def plot_area_and_score(samples: SampleList, compound_name: str, include_none: b
 	peak_areas, scores = samples.get_areas_and_scores(compound_name, include_none)
 
 	fig, ax1 = plt.subplots()
-	y_positions = numpy.arange(len(peak_areas))
-	y_positions = [x * 1.5 for x in y_positions]
+	y_positions = [x * 1.5 for x in numpy.arange(len(peak_areas))]
 
 	bar_width = 0.5
 	offset = bar_width / 2
@@ -124,11 +132,11 @@ def plot_areas(
 		include_none: bool = False,
 		show_scores: bool = False,
 		legend_cols: int = 6,
-		mz_range=None,
+		mz_range: Optional[Tuple[int, int]] = None,
 		show_score_in_legend: bool = False,
 		) -> Tuple[Figure, Axes]:
 	"""
-	Plot the peak area and score for the compounds with the given names
+	Plot the peak area and score for the compounds with the given names.
 
 	:param fig:
 	:param ax:
@@ -146,8 +154,7 @@ def plot_areas(
 	if show_scores:
 		ax2 = ax.twiny()
 
-	y_positions = numpy.arange(len(areas_dict))
-	y_positions = [x * 1.5 for x in y_positions]
+	y_positions = [x * 1.5 for x in numpy.arange(len(areas_dict))]
 
 	# n_samples = areas_dict.n_samples
 	n_compounds = len(compound_names)
@@ -157,8 +164,11 @@ def plot_areas(
 	# TODO: bar_spacing = bar_width / (n_samples + 1)
 
 	bar_offsets = list(
-			numpy.arange((0 - ((bar_width / 2) * (n_compounds - 1))), (0 + ((bar_width / 2) * n_compounds)),
-							bar_width)
+			numpy.arange(
+					(0 - ((bar_width / 2) * (n_compounds - 1))),
+					(0 + ((bar_width / 2) * n_compounds)),
+					bar_width,
+					)
 			)[::-1]  # Reverse order
 
 	sample_names = areas_dict.sample_names
@@ -185,10 +195,12 @@ def plot_areas(
 				)
 
 		if show_scores:
-			score_scatter = ax2.scatter([x if x else None for x in compound_scores],
-										compound_y_positions,
-										color=["black" if s >= 75 else "orange" for s in compound_scores],
-										s=bar_width * 50)
+			score_scatter = ax2.scatter(
+					[x if x else None for x in compound_scores],
+					compound_y_positions,
+					color=["black" if s >= 75 else "orange" for s in compound_scores],
+					s=bar_width * 50,
+					)
 		# for area, ypos in zip(compound_areas, compound_y_positions):
 		# 	score_text = ax.text(area, ypos, "Score", va='center')
 
@@ -225,10 +237,10 @@ def plot_retention_times(
 		compound_names: List[str],
 		include_none: bool = False,
 		legend_cols: int = 6,
-		mz_range=None,
+		mz_range: Optional[Tuple[int, int]] = None,
 		) -> Tuple[Figure, Axes]:
 	"""
-	Plot the retention times for the compounds with the given names
+	Plot the retention times for the compounds with the given names.
 
 	:param fig:
 	:param ax:
@@ -306,10 +318,16 @@ class ChartItem:
 	:param current_name:
 	"""
 
-	def __init__(self, new_name: str, filename: PathLike, sort_order, current_name: Optional[str] = None):
+	def __init__(
+			self,
+			new_name: str,
+			filename: PathLike,
+			sort_order: int,
+			current_name: Optional[str] = None,
+			):
 		self.new_name: str = new_name
 		self.filename: PathLike = filename
-		self.sort_order = sort_order
+		self.sort_order: int = sort_order
 		self.current_name: Optional[str] = current_name
 
 	__slots__ = ("new_name", "filename", "sort_order", "current_name")
@@ -319,7 +337,7 @@ class ChartItem:
 			cls,
 			new_name: str,
 			filename: PathLike,
-			sort_order,
+			sort_order: int,
 			current_name: Optional[str] = None,
 			*,
 			concentration,
@@ -382,7 +400,7 @@ def sort_n_filter_by_filename(all_samples: SampleList, chart_items: Iterable[Cha
 	"""
 
 	# Filter samples, reorder and rename
-	target_samples = all_samples.filter([s.filename for s in chart_items], key="filename")
+	target_samples = all_samples.filter([os.fspath(s.filename) for s in chart_items], key="filename")
 
 	ug_sample_order = {s.filename: s.sort_order for s in chart_items}
 	target_samples.reorder_samples(ug_sample_order, key="filename")
@@ -399,19 +417,20 @@ raw_mz_type = Union[str, float]
 def update_label_with_cal_range(
 		item: ChartItem,
 		mass_calibration_ranges: Dict[str, Sequence[raw_mz_type]],
-		):
+		) -> ChartItem:
 	"""
 
 	:param item:
 	:param mass_calibration_ranges:
 	"""
 
-	item.new_name += "\n${}-{}~m/z$".format(*mass_calibration_ranges[item.filename])
+	item.new_name += "\n${}-{}~m/z$".format(*mass_calibration_ranges[os.fspath(item.filename)])
 	return item
 
 
 def cast_cal_range(cal_range: Sequence[raw_mz_type]) -> Tuple[float, float]:
 	"""
+	Cast calibration range from a sequence of two arbitrary numeric types into a tuple of two floats.
 
 	:param cal_range:
 	"""
@@ -427,7 +446,7 @@ def legend(
 		mz_range: Optional[Tuple[int, int]] = None,
 		show_score: bool = False,
 		**kwargs,
-		):
+		) -> Legend:
 	"""
 	Place a legend on the figure.
 	"""
@@ -472,7 +491,8 @@ def update_all_labels_with_cal_range(
 		default_cal_range = cast_cal_range(default_cal_range)
 
 		if not any(
-				cast_cal_range(mass_calibration_ranges[item.filename]) != default_cal_range for item in item_list
+				cast_cal_range(mass_calibration_ranges[os.fspath(item.filename)]) != default_cal_range
+				for item in item_list
 				):
 			return
 
