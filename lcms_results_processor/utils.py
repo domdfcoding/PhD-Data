@@ -93,7 +93,7 @@ def make_conditions_label(
 		output_string += f"\n{vol} injection"
 	if conditions:
 		# output_string += f"\n({', '.join(conditions)})"
-		output_string += "\n".join(('', *conditions))
+		output_string += '\n'.join(('', *conditions))
 	for key, val in kwargs.items():
 		output_string += f"\n{key}: {val}"
 
