@@ -32,19 +32,19 @@ import os
 from typing import Dict, Iterable, List, Optional, Sequence, Tuple, Union
 
 # 3rd party
-import matplotlib.ticker as plticker  # type: ignore[import]
+import matplotlib.ticker as plticker
 import numpy
-import pandas  # type: ignore[import]
+import pandas  # type: ignore[import-untyped]
 from domdf_python_tools import pagesizes
 from domdf_python_tools.iterative import chunks
 from domdf_python_tools.typing import PathLike
-from domplotlib.styles.domdf import plt  # type: ignore[import]
+from domplotlib.styles.domdf import plt
 from mathematical.data_frames import set_display_options
-from matplotlib.axes import Axes  # type: ignore[import]
-from matplotlib.collections import PathCollection  # type: ignore[import]
-from matplotlib.figure import Figure  # type: ignore[import]
-from matplotlib.legend import Legend  # type: ignore[import]
-from matplotlib.patches import Rectangle  # type: ignore[import]
+from matplotlib.axes import Axes
+from matplotlib.collections import PathCollection
+from matplotlib.figure import Figure
+from matplotlib.legend import Legend
+from matplotlib.patches import Rectangle
 from mh_utils.csv_parser import SampleList
 
 # this package
@@ -60,7 +60,7 @@ __all__ = [
 		"update_label_with_cal_range",
 		"cast_cal_range",
 		"legend",
-		"update_all_labels_with_cal_range"
+		"update_all_labels_with_cal_range",
 		]
 
 # Display options for numpy and pandas
@@ -168,7 +168,7 @@ def plot_areas(
 					(0 - ((bar_width / 2) * (n_compounds - 1))),
 					(0 + ((bar_width / 2) * n_compounds)),
 					bar_width,
-					)
+					),
 			)[::-1]  # Reverse order
 
 	sample_names = areas_dict.sample_names
@@ -191,7 +191,7 @@ def plot_areas(
 				label=compound_name,
 				height=bar_width,
 				edgecolor="black",
-				linewidth=0.25
+				linewidth=0.25,
 				)
 
 		if show_scores:
@@ -346,9 +346,9 @@ class ChartItem:
 			dgf=None,
 			neb=None,
 			vol=format_si_units(5, "µL"),
-			**kwargs
+			**kwargs,
 			) -> "ChartItem":
-		"""
+		r"""
 		Construct a :class:`~.ChartItem`.
 
 		:param new_name:
@@ -361,7 +361,7 @@ class ChartItem:
 		:param dgf:
 		:param neb:
 		:param vol:
-		:param kwargs:
+		:param \*\*kwargs:
 		"""
 
 		new_name = make_conditions_label(
@@ -447,8 +447,14 @@ def legend(
 		show_score: bool = False,
 		**kwargs,
 		) -> Legend:
-	"""
+	r"""
 	Place a legend on the figure.
+
+	:param fig:
+	:param ncol:
+	:param mz_range:
+	:param show_score:
+	:param \*\*kwargs:
 	"""
 
 	handles, labels = fig.axes[0].get_legend_handles_labels()

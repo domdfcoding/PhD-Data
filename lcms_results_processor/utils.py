@@ -31,7 +31,7 @@ from numbers import Number
 from typing import Iterable, List, Optional
 
 # 3rd party
-import pandas  # type: ignore[import]
+import pandas  # type: ignore[import-untyped]
 import sdjson
 from chemistry_tools.units import format_si_units, m_math_space
 from domdf_python_tools.typing import PathLike
@@ -93,7 +93,7 @@ def make_conditions_label(
 		output_string += f"\n{vol} injection"
 	if conditions:
 		# output_string += f"\n({', '.join(conditions)})"
-		output_string += f"\n".join(('', *conditions))
+		output_string += "\n".join(('', *conditions))
 	for key, val in kwargs.items():
 		output_string += f"\n{key}: {val}"
 

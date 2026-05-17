@@ -190,7 +190,7 @@ def make_charts():
 		show_scores=True,
 		legend_cols=4,
 		show_score_in_legend=True,
-		)
+	)
 	# fig.suptitle("Peak Areas and Scores with Method 3", fontsize=14, y=0.985)
 	ax.set_ylabel("Concentration and Conditions")
 	fig.text(0.739, 0.026, "¹²³", fontsize=9, zorder=20)
@@ -221,7 +221,7 @@ def make_charts():
 		legend_cols=4,
 		# mz_range=(100, 3200)
 		show_score_in_legend=True,
-		)
+	)
 	# fig.suptitle("Peak Areas and Scores for Mixed Standard with Method 3", fontsize=14, y=0.985)
 	ax.set_ylabel("Concentration")  #  and Conditions
 	fig.text(0.637, 0.026, "Calibration Range: $100-3200~m/z$", fontsize=9, zorder=20)

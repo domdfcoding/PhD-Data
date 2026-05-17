@@ -28,8 +28,8 @@
 
 # 3rd party
 from domdf_python_tools.typing import PathLike
-from domplotlib import save_svg  # type: ignore[import]
-from matplotlib.figure import Figure  # type: ignore[import]
+from domplotlib import save_svg
+from matplotlib.figure import Figure
 
 __all__ = ["savefig"]
 

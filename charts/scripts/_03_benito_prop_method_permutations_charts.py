@@ -53,7 +53,7 @@ chart_items = [
 				concentration=_1ug_l,
 				esi=None,
 				vol=None,
-				new_name="(a)"
+				new_name="(a)",
 				),
 
 		# just nitrobenzene

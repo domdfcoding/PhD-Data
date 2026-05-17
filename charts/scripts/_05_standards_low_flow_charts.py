@@ -86,7 +86,7 @@ chart_items = [
 				filename="DPA_1ug_ml_2_200206-0004.d",
 				concentration=_1ug_l,
 				vol=None,
-				esi=None
+				esi=None,
 				),
 		ChartItem.from_conditions(
 				sort_order=70,
@@ -102,7 +102,7 @@ chart_items = [
 				filename="EC_1ug_ml_2_200206-0008.d",
 				concentration=_1ug_l,
 				vol=None,
-				esi=None
+				esi=None,
 				),
 		]
 
